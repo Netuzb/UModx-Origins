@@ -59,8 +59,8 @@ class ThomPresets(loader.Module):
             " {}...</i>"
         ),
         "installed": (
-            "<emoji document_id='5436040291507247633'>🎉</emoji> <b>Umumiy hisobda"
-            " </b><code>{}</code><b> oʻrnatildi!</b>"
+            "<emoji document_id='5436040291507247633'>🎉</emoji> <b>Barcha"
+            " </b><code>{}</code><b> modullari oʻrnatildi!</b>"
         ),
         "back": "↩️ Orqaga",
         "install": "💾️ O'rnatish",
