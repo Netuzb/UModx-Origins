@@ -24,10 +24,10 @@ class CoreMod(loader.Module):
             " change it back</b>"
         ),
         "alias_created": (
-            '<emoji document_id="5368324170671202286">👍</emoji> <b>Alias created.'
-            " Access it with</b> <code>{}</code>"
+            '<emoji document_id="5368324170671202286">👍</emoji> <b>Qisqa buyruq yaratildi.'
+            " Quyidagi koʻrinishda</b> <code>{}</code>"
         ),
-        "aliases": "<b>🔗 Aliases:</b>\n",
+        "aliases": "<b>🔗 Qisqa buyruqlar:</b>\n",
         "no_command": (
             "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Command</b>"
             " <code>{}</code> <b>does not exist</b>"
@@ -95,7 +95,7 @@ class CoreMod(loader.Module):
     @loader.owner
     @loader.command(ru_doc="<префикс> - Установить префикс команд")
     async def setprefix(self, message: Message):
-        """<prefix> - Sets command prefix"""
+        """Prefiks o'rnatish"""
         args = utils.get_args_raw(message)
 
         if not args:
@@ -118,8 +118,8 @@ class CoreMod(loader.Module):
 
     @loader.owner
     @loader.command(ru_doc="Показать список алиасов")
-    async def aliases(self, message: Message):
-        """Print all your aliases"""
+    async def shorts(self, message: Message):
+        """Barcha qisqa buyruqlar roʻyhati"""
         aliases = self.allmodules.aliases
         string = self.strings("aliases")
 
@@ -131,8 +131,8 @@ class CoreMod(loader.Module):
 
     @loader.owner
     @loader.command(ru_doc="Установить алиас для команды")
-    async def addalias(self, message: Message):
-        """Set an alias for a command"""
+    async def addshort(self, message: Message):
+        """Qisqa buyruq yaratish"""
         args = utils.get_args(message)
 
         if len(args) != 2:
@@ -160,8 +160,8 @@ class CoreMod(loader.Module):
 
     @loader.owner
     @loader.command(ru_doc="Удалить алиас для команды")
-    async def delalias(self, message: Message):
-        """Remove an alias for a command"""
+    async def rmshort(self, message: Message):
+        """Qisqa buyruqni oʻchirish"""
         args = utils.get_args(message)
 
         if len(args) != 1:
