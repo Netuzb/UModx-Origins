@@ -26,7 +26,7 @@ PRESETS = {
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/funquotes.py",
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/hacker.py",
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/imgbb.py",
-        "https://raw.githubusercontent.com/AmoreForever/amoremods/master/instasave.py",
+        "https://raw.githubusercontent.com/AmoreForever/amoremods/master/instsave.py",
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/meowvoices.py",
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/mydiary.py",
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/searchpic.py",
