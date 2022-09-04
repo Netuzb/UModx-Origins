@@ -49,12 +49,12 @@ class ThomPresets(loader.Module):
             "<b>{}:</b>\n🚨 <b>Info:</b> <i>{}</i>\n\n🗃️ <b>Ushbu katalogdagi modullar:</b>\n\n{}"
         ),    
         "installing": (
-            "<emoji document_id='5451732530048802485'>⏳</emoji> <b>Umumiy hisobda"
-            " </b><code>{}</code><b>...</b>"
+            "<emoji document_id='5451732530048802485'>⏳</emoji> <b>Hozirgi vaqtda"
+            " </b><code>{}</code> modullari o'rnatilmoqda <b>...</b>"
         ),
         "installing_module": (
             "<emoji document_id='5451732530048802485'>⏳</emoji> <b>oʻrnatilmoqda..."
-            " </b><code>{}</code><b> ({}/{} modullar)...</b>\n\n<emoji"
+            " </b><code>{}</code><b> ({}/{} modul oʻrnatildi)...</b>\n\n<emoji"
             " document_id='5373141891321699086'>😎</emoji> <i>"
             " {}...</i>"
         ),
