@@ -54,12 +54,12 @@ class ThomPresets(loader.Module):
         ),
         "installing_module": (
             "<emoji document_id='5451732530048802485'>⏳</emoji> <b>Hozirgi vaqtda..."
-            " </b><code>{}</code><b> ({}/{} modul oʻrnatildi)...</b>\n\n"
-            " <emoji document_id='5456168015789824301'>😁</emoji> <i>"
+            " </b><code>{}</code><b> ({}/{} modul oʻrnatildi)...</b>\n\n<emoji"
+            " document_id='5235816140302721259'>👑</emoji> <i>"
             " {}...</i>"
         ),
         "installed": (
-            "<emoji document_id='5436040291507247633'>🎉</emoji> <b>Barcha"
+            "<emoji document_id='5235816140302721259'>👑</emoji> <b>Barcha"
             " </b><code>{}</code><b> modullari oʻrnatildi!</b>"
         ),
         "back": "↩️ Orqaga",
