@@ -1,6 +1,6 @@
 __version__ = (2, 1, 4)
 
-#            ▀█▀ █ █.  █▀█  █▀▄▀█ ▄▀█  █▀
+#            ▀█▀ █ █ █▀█ █▀▄▀█ ▄▀█ █▀
 #             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
 #             https://t.me/netuzb
 #
@@ -24,7 +24,7 @@ class ModuleCloudMod(loader.Module):
     """UModx modules management"""
 
     strings = {
-         "name": "ModuleCloud",
+         "name": "ModsCloud",
          "args": "🚫 <b>Arglar belgilanmagan</b>",
          "mod404": "🚫 <b>Modul {} topilmadi</b>",
          "ilink": (
