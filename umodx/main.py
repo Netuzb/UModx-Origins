@@ -562,7 +562,7 @@ class umodx:
             repo = git.Repo()
 
             build = repo.heads[0].commit.hexsha
-            diff = repo.git.log(["HEAD..origin/master", "--oneline"])
+            diff = repo.git.log(["HEAD..origin/main", "--oneline"])
             upd = r"Update required" if diff else r"Up-to-date"
 
             _platform = utils.get_named_platform()
