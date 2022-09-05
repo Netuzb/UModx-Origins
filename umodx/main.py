@@ -458,7 +458,7 @@ class umodx:
                     connection=self.conn,
                     proxy=self.proxy,
                     connection_retries=None,
-                    device_model="umodx Userbot",
+                    device_model="Redmi Redmi Note 9 Pro",
                 )
 
                 client.start(phone)
@@ -498,7 +498,7 @@ class umodx:
                     connection=self.conn,
                     proxy=self.proxy,
                     connection_retries=None,
-                    device_model="umodx Userbot",
+                    device_model="Redmi Redmi Note 9 Pro",
                 )
 
                 client.start(phone=raise_auth if self.web else lambda: input("Phone: "))
