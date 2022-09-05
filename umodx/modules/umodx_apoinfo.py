@@ -347,7 +347,7 @@ class ApodiktumInfoMod(loader.Module):
         umodx = f"""
         <emoji document_id="5235816140302721259">👑</emoji> <b>UMODX</b> - ikkinchi talqin
 
-        <emoji document_id="5785175271011259591">🌀</emoji> <b>Boshqaruvchi</b>: <i>{utils.escape_html(get_display_name(self._me))}</i>
+        <emoji document_id="5785175271011259591">🌀</emoji> <b>Boshqaruvchi</b>: <i>thomas</i>
         <emoji document_id="5785363566672482185">🔔</emoji> <b>Versiya</b>: <i>{".".join(list(map(str, list(main.version))))}</i>
         """
         await message.edit(umodx)
