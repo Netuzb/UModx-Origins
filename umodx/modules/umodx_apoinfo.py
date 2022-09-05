@@ -344,7 +344,13 @@ class ApodiktumInfoMod(loader.Module):
     @loader.unrestricted
     async def umcmd(self, message: Message):
         """Versiya haqida maʼlumot"""
-        await message.edit(f'<i>{".".join(list(map(str, list(main.__version__))))}</i>')
+        umodx = f"""
+        <emoji document_id="5235816140302721259">👑</emoji> <b>UMODX</b> - ikkinchi talqin
+
+        <emoji document_id="5785175271011259591">🌀</emoji> <b>Boshqaruvchi</b>: <i>{utils.escape_html(get_display_name(self._me))}</i>
+        <emoji document_id="5785363566672482185">🔔</emoji> <b>Versiya</b>: <i>{".".join(list(map(str, list(main.version))))}</i>
+        """
+        await message.edit(umodx)
         return
 
     @loader.unrestricted
