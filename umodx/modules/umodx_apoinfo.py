@@ -342,6 +342,12 @@ class ApodiktumInfoMod(loader.Module):
         )
 
     @loader.unrestricted
+    async def umcmd(self, message: Message):
+        """Versiya haqida maʼlumot"""
+        await message.edit(f'<i>{".".join(list(map(str, list(main.__version__))))}</i>')
+        return
+
+    @loader.unrestricted
     async def infocmd(self, message: Message):
         """Send userbot info"""
         m = {x: self._get_mark(x) for x in range(13)}
