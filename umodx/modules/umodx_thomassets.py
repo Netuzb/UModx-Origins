@@ -34,43 +34,7 @@ class SettingsMod(loader.Module):
     """UModx sozlamalari, umumiy hajmda"""
 
     strings = {
-        "name": "Sets",
-        "watchers": (
-            "<emoji document_id='5424885441100782420'>👀</emoji>"
-            " <b>Watchers:</b>\n\n<b>{}</b>"
-        ),
-        "mod404": (
-            "<emoji document_id='5447207618793708263'>🚫</emoji> <b>Watcher {} not"
-            " found</b>"
-        ),
-        "disabled": (
-            "<emoji document_id='5424885441100782420'>👀</emoji> <b>Watcher {} is now"
-            " <u>disabled</u></b>"
-        ),
-        "enabled": (
-            "<emoji document_id='5424885441100782420'>👀</emoji> <b>Watcher {} is now"
-            " <u>enabled</u></b>"
-        ),
-        "args": (
-            "<emoji document_id='5447207618793708263'>🚫</emoji> <b>You need to specify"
-            " watcher name</b>"
-        ),
-        "user_nn": (
-            "<emoji document_id='5469791106591890404'>🪄</emoji> <b>NoNick for this user"
-            " is now {}</b>"
-        ),
-        "no_cmd": (
-            "<emoji document_id='5469791106591890404'>🪄</emoji> <b>Please, specify"
-            " command to toggle NoNick for</b>"
-        ),
-        "cmd_nn": (
-            "<emoji document_id='5469791106591890404'>🪄</emoji> <b>NoNick for"
-            " </b><code>{}</code><b> is now {}</b>"
-        ),
-        "cmd404": (
-            "<emoji document_id='5469791106591890404'>🪄</emoji> <b>Command not"
-            " found</b>"
-        ),
+        "name": "ThomasMod",
         "inline_settings": "⚙️ <b>Here you can configure your umodx settings</b>",
         "confirm_update": (
             "🧭 <b>Please, confirm that you want to update. Your userbot will be"
@@ -91,15 +55,6 @@ class SettingsMod(loader.Module):
         "private_not_allowed": (
             "<emoji document_id='5447207618793708263'>🚫</emoji> <b>This command must be"
             " executed in chat</b>"
-        ),
-        "nonick_warning": (
-            "Warning! You enabled NoNick with default prefix! "
-            "You may get muted in umodx chats. Change prefix or "
-            "disable NoNick!"
-        ),
-        "reply_required": (
-            "<emoji document_id='5447207618793708263'>🚫</emoji> <b>Reply to a message"
-            " of user, which needs to be added to NoNick</b>"
         ),
         "deauth_confirm": (
             "⚠️ <b>This action will fully remove umodx from this account and can't be"
