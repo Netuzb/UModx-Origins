@@ -170,7 +170,7 @@ class SettingsMod(loader.Module):
         ], self._db.get(main.__name__, "disabled_watchers", {})
 
     async def purgecmd(self, message):
-        """Purge from the replied message"""
+        """> Barcha habarlarni oʻchirish """
         if not message.is_reply:
             await utils.answer(message, self.strings("from_where", message))
             return
@@ -216,9 +216,28 @@ class SettingsMod(loader.Module):
             await message.client.delete_messages(message.to_id, msgs)
         await self.allmodules.log("purge", group=message.to_id, affected_uids=from_ids)
 
+    async def delcmd(self, message):
+        """ > Habarni oʻchirish"""
+        msgs = [message.id]
+        if not message.is_reply:
+            if await message.client.is_bot():
+                await utils.answer(message, self.strings("delete_what", message))
+                return
+            msg = await message.client.iter_messages(
+                message.to_id, 1, max_id=message.id
+            ).__anext__()
+        else:
+            msg = await message.get_reply_message()
+        msgs.append(msg.id)
+        logger.debug(msgs)
+        await message.client.delete_messages(message.to_id, msgs)
+        await self.allmodules.log(
+            "delete", group=message.to_id, affected_uids=[msg.sender_id]
+        )
+
     @loader.command(ru_doc="Очистить логи")
     async def clearlogs(self, message: Message):
-        """Clear logs"""
+        """> Loglarni tozalash"""
         for handler in logging.getLogger().handlers:
             handler.buffer = []
             handler.handledbuffer = []
@@ -226,185 +245,8 @@ class SettingsMod(loader.Module):
 
         await utils.answer(message, self.strings("logs_cleared"))
 
-    @loader.command(ru_doc="Включить NoNick для определенного пользователя")
-    async def nonickuser(self, message: Message):
-        """Allow no nickname for certain user"""
-        reply = await message.get_reply_message()
-        if not reply:
-            await utils.answer(message, self.strings("reply_required"))
-            return
-
-        u = reply.sender_id
-        if not isinstance(u, int):
-            u = u.user_id
-
-        nn = self._db.get(main.__name__, "nonickusers", [])
-        if u not in nn:
-            nn += [u]
-            nn = list(set(nn))  # skipcq: PTC-W0018
-            await utils.answer(message, self.strings("user_nn").format("on"))
-        else:
-            nn = list(set(nn) - {u})
-            await utils.answer(message, self.strings("user_nn").format("off"))
 
         self._db.set(main.__name__, "nonickusers", nn)
-
-    @loader.command(ru_doc="Включить NoNick для определенного чата")
-    async def nonickchat(self, message: Message):
-        """Allow no nickname in certain chat"""
-        if message.is_private:
-            await utils.answer(message, self.strings("private_not_allowed"))
-            return
-
-        chat = utils.get_chat_id(message)
-
-        nn = self._db.get(main.__name__, "nonickchats", [])
-        if chat not in nn:
-            nn += [chat]
-            nn = list(set(nn))  # skipcq: PTC-W0018
-            await utils.answer(
-                message,
-                self.strings("cmd_nn").format(
-                    utils.escape_html((await message.get_chat()).title),
-                    "on",
-                ),
-            )
-        else:
-            nn = list(set(nn) - {chat})
-            await utils.answer(
-                message,
-                self.strings("cmd_nn").format(
-                    utils.escape_html((await message.get_chat()).title),
-                    "off",
-                ),
-            )
-
-        self._db.set(main.__name__, "nonickchats", nn)
-
-    @loader.command(ru_doc="Включить NoNick для определенной команды")
-    async def nonickcmdcmd(self, message: Message):
-        """Allow certain command to be executed without nickname"""
-        args = utils.get_args_raw(message)
-        if not args:
-            await utils.answer(message, self.strings("no_cmd"))
-            return
-
-        if args not in self.allmodules.commands:
-            await utils.answer(message, self.strings("cmd404"))
-            return
-
-        nn = self._db.get(main.__name__, "nonickcmds", [])
-        if args not in nn:
-            nn += [args]
-            nn = list(set(nn))
-            await utils.answer(
-                message,
-                self.strings("cmd_nn").format(
-                    self.get_prefix() + args,
-                    "on",
-                ),
-            )
-        else:
-            nn = list(set(nn) - {args})
-            await utils.answer(
-                message,
-                self.strings("cmd_nn").format(
-                    self.get_prefix() + args,
-                    "off",
-                ),
-            )
-
-        self._db.set(main.__name__, "nonickcmds", nn)
-
-    @loader.command(ru_doc="Показать список активных NoNick команд")
-    async def nonickcmds(self, message: Message):
-        """Returns the list of NoNick commands"""
-        if not self._db.get(main.__name__, "nonickcmds", []):
-            await utils.answer(message, self.strings("nothing"))
-            return
-
-        await utils.answer(
-            message,
-            self.strings("cmd_nn_list").format(
-                "\n".join(
-                    [
-                        f"▫️ <code>{self.get_prefix()}{cmd}</code>"
-                        for cmd in self._db.get(main.__name__, "nonickcmds", [])
-                    ]
-                )
-            ),
-        )
-
-    @loader.command(ru_doc="Показать список активных NoNick пользователей")
-    async def nonickusers(self, message: Message):
-        """Returns the list of NoNick users"""
-        users = []
-        for user_id in self._db.get(main.__name__, "nonickusers", []).copy():
-            try:
-                user = await self._client.get_entity(user_id)
-            except Exception:
-                self._db.set(
-                    main.__name__,
-                    "nonickusers",
-                    list(
-                        (
-                            set(self._db.get(main.__name__, "nonickusers", []))
-                            - {user_id}
-                        )
-                    ),
-                )
-
-                logger.warning(
-                    f"User {user_id} removed from nonickusers list", exc_info=True
-                )
-                continue
-
-            users += [
-                "▫️ <b><a"
-                f' href="tg://user?id={user_id}">{utils.escape_html(get_display_name(user))}</a></b>'
-            ]
-
-        if not users:
-            await utils.answer(message, self.strings("nothing"))
-            return
-
-        await utils.answer(
-            message,
-            self.strings("user_nn_list").format("\n".join(users)),
-        )
-
-    @loader.command(ru_doc="Показать список активных NoNick чатов")
-    async def nonickchats(self, message: Message):
-        """Returns the list of NoNick chats"""
-        chats = []
-        for chat in self._db.get(main.__name__, "nonickchats", []):
-            try:
-                chat_entity = await self._client.get_entity(int(chat))
-            except Exception:
-                self._db.set(
-                    main.__name__,
-                    "nonickchats",
-                    list(
-                        (set(self._db.get(main.__name__, "nonickchats", [])) - {chat})
-                    ),
-                )
-
-                logger.warning(f"Chat {chat} removed from nonickchats list")
-                continue
-
-            chats += [
-                "▫️ <b><a"
-                f' href="{utils.get_entity_url(chat_entity)}">{utils.escape_html(get_display_name(chat_entity))}</a></b>'
-            ]
-
-        if not chats:
-            await utils.answer(message, self.strings("nothing"))
-            return
-
-        await utils.answer(
-            message,
-            self.strings("user_nn_list").format("\n".join(chats)),
-        )
 
     async def inline__setting(self, call: InlineCall, key: str, state: bool = False):
         if callable(key):
