@@ -1,6 +1,6 @@
 __version__ = (1, 0, 4)
 
-#            ▀█▀ █ █ █▀█  █▀▄▀█ ▄▀█ █▀
+#            ▀█▀ █ █ █▀█ █▀▄▀█ ▄▀█ █▀
 #             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
 #             https://t.me/netuzb
 #
@@ -28,8 +28,8 @@ emoji_warn = "🚨 "
 emoji_fire = "🔥 "
 
 # UModx start information 
-umodx = f"""{emoji_star}<b>«<u>UModx</u>»</b> - zamonaviy qatlamga xush kelibsiz!
-{emoji_white_cube}<b>«Maʼlumot oʻrnida»</b> - <u>UModx</u> yangilanishlari sizga bildirishnoma orqali yetib keladi
+umodx = f"""{emoji_star}<b>«<u>UModx</u>»</b> - Ishga tushirildi!
+{emoji_white_cube}<b>«Maʼlumot oʻrnida»</b> - bu yerda sizning reklamangiz boʻlishi mumkin edi.
 
 {emoji_warn} <b>Maʼlumot uchun buyruqlar:</b>
 {emoji_white_cube}.um - <b>versiya haqida maʼlumot</b>
