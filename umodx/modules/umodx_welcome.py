@@ -71,11 +71,7 @@ class StartHelloMod(loader.Module):
                             "text": f"{self.strings('umodx_thomas')}", 
                             "url": f"{self.strings('umodx_thomas_url')}"
                         }], 3,
-                        )
-                    + [[{
-                            "text": f"{self.strings('umodx_yopish')}", 
-                            "data": "umodx_null/umodx_katta_rahmat"
-                    }]]
+                        )                    
                 ),
             )        
 
