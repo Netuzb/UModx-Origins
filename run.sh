@@ -24,6 +24,4 @@ apt upgrade
 pkg install git
 pkg install python3
 
-cd python3 -m umodx || {
-	printf "\033[0;102m Ishga tushirilmoqda... \e[0m"
-}
+python3 -m umodx || { printf "Kuting..." } 
