@@ -52,7 +52,7 @@ class CoreMod(loader.Module):
             '<emoji document_id="5368324170671202286">👍</emoji><b> Database cleared</b>'
         ),
         "confirm_cleardb": "⚠️ <b>Ma'lumotlar bazasini tozalashni xohlayotganingizga ishonchingiz komilmi?</b>",
-        "cleardb_confirm": "🗑 Ma'lumotlar bazasini tozalash",
+        "cleardb_confirm": "🗑 Bazani tozalash",
         "cancel": "🚫 Bekor qilish",
     }
 
