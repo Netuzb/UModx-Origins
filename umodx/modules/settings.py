@@ -6,22 +6,22 @@ from ..inline.types import InlineCall
 
 @loader.tds
 class CoreMod(loader.Module):
-    """Control core userbot settings"""
+    """Asosiy userbot sozlamalarini boshqarish"""
 
     strings = {
-        "name": "Settings",
+        "name": "Sozlamalar",
         "too_many_args": (
-            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Too many args</b>"
+            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Arglar juda koʻp</b>"
         ),
-        "what_prefix": "❓ <b>What should the prefix be set to?</b>",
+        "umodx_prefix_nima": "❓ <b>Prefiks nimaga o'rnatilishi kerak?</b>",
         "prefix_incorrect": (
-            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Prefix must be one"
-            " symbol in length</b>"
+            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Prefiks bitta bo'lishi kerak"
+            " uzunlikdagi belgi</b>"
         ),
-        "prefix_set": (
-            '<emoji document_id="5368324170671202286">👍</emoji> <b>Command prefix'
-            " updated. Type</b> <code>{newprefix}setprefix {oldprefix}</code> <b>to"
-            " change it back</b>"
+        "umodx_prefix": (
+            '<emoji document_id="5368324170671202286">👍</emoji> <b>Buyruq prefiksi'
+            " yangilandi. Type</b> <code>{newprefix}setprefix {oldprefix}</code> <b>"
+            " uni orqaga o'zgartirish uchun teskari qoʻllang</b>"
         ),
         "alias_created": (
             '<emoji document_id="5368324170671202286">👍</emoji> <b>Qisqa buyruq yaratildi.'
@@ -29,31 +29,31 @@ class CoreMod(loader.Module):
         ),
         "aliases": "<b>🔗 Qisqa buyruqlar:</b>\n",
         "no_command": (
-            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Command</b>"
-            " <code>{}</code> <b>does not exist</b>"
+            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Buyruq</b>"
+            " <code>{}</code> <b>mavjud emas</b>"
         ),
         "alias_args": (
-            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>You must provide a"
-            " command and the alias for it</b>"
+            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>taqdim etishingiz kerak"
+            " buyrug'i va uning taxallusi</b>"
         ),
         "delalias_args": (
-            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>You must provide the"
-            " alias name</b>"
+            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>taqdim etishingiz kerak"
+            " taxallus nomi</b>"
         ),
         "alias_removed": (
-            '<emoji document_id="5368324170671202286">👍</emoji> <b>Alias</b>'
-            " <code>{}</code> <b>removed</b>."
+            '<emoji document_id="5368324170671202286">👍</emoji> <b>Qisqartma</b>'
+            " <code>{}</code> <b>oʻchirildi</b>."
         ),
         "no_alias": (
-            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Alias</b>"
-            " <code>{}</code> <b>does not exist</b>"
+            "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Qisqartma</b>"
+            " <code>{}</code> <b>mavjud emas</b>"
         ),
         "db_cleared": (
-            '<emoji document_id="5368324170671202286">👍</emoji><b> Database cleared</b>'
+            '<emoji document_id="5368324170671202286">👍</emoji><b> Ma‘lumotlar bazasi tozalandi</b>'
         ),
-        "confirm_cleardb": "⚠️ <b>Are you sure, that you want to clear database?</b>",
-        "cleardb_confirm": "🗑 Clear database",
-        "cancel": "🚫 Cancel",
+        "umodx_data_baza": "🚨 <b>Ma'lumotlar bazasini tozalashni xohlayotganingizga ishonchingiz komilmi?</b>",
+        "umodx_data_baza_tasdiq": "🗑 Ma'lumotlar bazasini tozalash",
+        "cancel": "🚫 Bekor qilish",
     }
 
     async def blacklistcommon(self, message: Message):
@@ -99,7 +99,7 @@ class CoreMod(loader.Module):
         args = utils.get_args_raw(message)
 
         if not args:
-            await utils.answer(message, self.strings("what_prefix"))
+            await utils.answer(message, self.strings("umodx_prefix_nima"))
             return
 
         if len(args) != 1:
@@ -110,7 +110,7 @@ class CoreMod(loader.Module):
         self._db.set(main.__name__, "command_prefix", args)
         await utils.answer(
             message,
-            self.strings("prefix_set").format(
+            self.strings("umodx_prefix").format(
                 newprefix=utils.escape_html(args[0]),
                 oldprefix=utils.escape_html(oldprefix),
             ),
@@ -189,13 +189,13 @@ class CoreMod(loader.Module):
     @loader.owner
     @loader.command(ru_doc="Очистить базу данных")
     async def cleardb(self, message: Message):
-        """Clear the entire database, effectively performing a factory reset"""
+        """Zavod sozlamalarini tiklashni samarali amalga oshirib, butun ma'lumotlar bazasini tozalash"""
         await self.inline.form(
-            self.strings("confirm_cleardb"),
+            self.strings("umodx_data_baza"),
             message,
             reply_markup=[
                 {
-                    "text": self.strings("cleardb_confirm"),
+                    "text": self.strings("umodx_data_baza_tasdiq"),
                     "callback": self._inline__cleardb,
                 },
                 {
