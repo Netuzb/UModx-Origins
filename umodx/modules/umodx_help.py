@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class MHelpMod(loader.Module):
-    """MHelp module, made specifically for umodx with <3"""
+    """Umodx uchun maxsus yaratilgan MHelp moduli <3"""
 
     strings = {
-        "name": "Help",
+        "name": "Info",
         "bad_module": "<b>🚫 <b>Module</b> <code>{}</code> <b>not found</b>",
         "single_mod_header": "🌄 <b>Module name:</b> {}",
         "single_cmd": "\n🌄 <b>«{}{}»</b> {}",
