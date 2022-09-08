@@ -28,7 +28,7 @@ class UpdaterMod(loader.Module):
     """Updates itself"""
 
     strings = {
-        "name": "Yangilovchi",
+        "name": "Updater",
         "restarting_caption": (
             " <b>{}"
             " restart...</b>"
