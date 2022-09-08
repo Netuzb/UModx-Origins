@@ -9,7 +9,7 @@ class CoreMod(loader.Module):
     """Control core userbot settings"""
 
     strings = {
-        "name": "Settings",
+        "name": "Sozlamalar",
         "too_many_args": (
             "<emoji document_id='5436162517686557387'>🚫</emoji> <b>Too many args</b>"
         ),
