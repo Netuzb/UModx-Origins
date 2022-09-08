@@ -24,4 +24,5 @@ apt upgrade
 pkg install git
 pkg install python3
 
-python3 -m umodx || { printf "Kuting..." } 
+# Asosiy boʻlim 
+python3 -m umodx
