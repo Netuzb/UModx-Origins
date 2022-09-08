@@ -23,6 +23,7 @@ apt upgrade
 # Kerakli bibliotekalar
 pkg install git
 pkg install python3
+pip install -r requirements.txt
 
 # Asosiy boʻlim 
 python3 -m umodx
