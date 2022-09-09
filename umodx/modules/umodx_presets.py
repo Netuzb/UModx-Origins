@@ -32,6 +32,70 @@ PRESETS = {
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/searchpic.py",
         "https://raw.githubusercontent.com/AmoreForever/amoremods/master/telegraphup.py",
     ],
+    "fun": [
+        "https://mods.hikariatama.ru/aniquotes.py",
+        "https://mods.hikariatama.ru/artai.py",
+        "https://mods.hikariatama.ru/inline_ghoul.py",
+        "https://mods.hikariatama.ru/lovemagic.py",
+        "https://mods.hikariatama.ru/mindgame.py",
+        "https://mods.hikariatama.ru/moonlove.py",
+        "https://mods.hikariatama.ru/neko.py",
+        "https://mods.hikariatama.ru/purr.py",
+        "https://mods.hikariatama.ru/rpmod.py",
+        "https://mods.hikariatama.ru/scrolller.py",
+        "https://mods.hikariatama.ru/tictactoe.py",
+        "https://mods.hikariatama.ru/trashguy.py",
+        "https://mods.hikariatama.ru/truth_or_dare.py",
+        "https://mods.hikariatama.ru/sticks.py",
+        "https://mods.hikariatama.ru/premium_sticks.py",
+        "https://heta.hikariatama.ru/MoriSummerz/ftg-mods/magictext.py",
+        "https://heta.hikariatama.ru/HitaloSama/FTG-modules-repo/quotes.py",
+        "https://heta.hikariatama.ru/HitaloSama/FTG-modules-repo/spam.py",
+        "https://heta.hikariatama.ru/SkillsAngels/Modules/IrisLab.py",
+        "https://heta.hikariatama.ru/Fl1yd/FTG-Modules/arts.py",
+        "https://heta.hikariatama.ru/SkillsAngels/Modules/Complements.py",
+        "https://heta.hikariatama.ru/Den4ikSuperOstryyPer4ik/Astro-modules/Compliments.py",
+        "https://heta.hikariatama.ru/vsecoder/hikka_modules/mazemod.py",
+    ],
+    "chat": [
+        "https://mods.hikariatama.ru/activists.py",
+        "https://mods.hikariatama.ru/banstickers.py",
+        "https://mods.hikariatama.ru/hikarichat.py",
+        "https://mods.hikariatama.ru/inactive.py",
+        "https://mods.hikariatama.ru/keyword.py",
+        "https://mods.hikariatama.ru/tagall.py",
+        "https://mods.hikariatama.ru/voicechat.py",
+        "https://mods.hikariatama.ru/vtt.py",
+        "https://heta.hikariatama.ru/SekaiYoneya/Friendly-telegram/BanMedia.py",
+        "https://heta.hikariatama.ru/iamnalinor/FTG-modules/swmute.py",
+        "https://heta.hikariatama.ru/GeekTG/FTG-Modules/filter.py",
+    ],
+    "service": [
+        "https://mods.hikariatama.ru/account_switcher.py",
+        "https://mods.hikariatama.ru/surl.py",
+        "https://mods.hikariatama.ru/httpsc.py",
+        "https://mods.hikariatama.ru/img2pdf.py",
+        "https://mods.hikariatama.ru/latex.py",
+        "https://mods.hikariatama.ru/pollplot.py",
+        "https://mods.hikariatama.ru/sticks.py",
+        "https://mods.hikariatama.ru/temp_chat.py",
+        "https://mods.hikariatama.ru/vtt.py",
+        "https://heta.hikariatama.ru/vsecoder/hikka_modules/accounttime.py",
+        "https://heta.hikariatama.ru/vsecoder/hikka_modules/searx.py",
+        "https://heta.hikariatama.ru/iamnalinor/FTG-modules/swmute.py",
+    ],
+    "downloaders": [
+        "https://mods.hikariatama.ru/musicdl.py",
+        "https://mods.hikariatama.ru/uploader.py",
+        "https://mods.hikariatama.ru/porn.py",
+        "https://mods.hikariatama.ru/web2file.py",
+        "https://heta.hikariatama.ru/AmoreForever/amoremods/instsave.py",
+        "https://heta.hikariatama.ru/CakesTwix/Hikka-Modules/tikcock.py",
+        "https://heta.hikariatama.ru/CakesTwix/Hikka-Modules/InlineYouTube.py",
+        "https://heta.hikariatama.ru/CakesTwix/Hikka-Modules/InlineSpotifyDownloader.py",
+        "https://heta.hikariatama.ru/GeekTG/FTG-Modules/downloader.py",
+        "https://heta.hikariatama.ru/Den4ikSuperOstryyPer4ik/Astro-modules/dl_yt_previews.py",
+    ],
 }
 
 @loader.tds
@@ -42,8 +106,25 @@ class ThomPresets(loader.Module):
         "name": "ThomPresets",
         "_wilsonmods_title": "🔥 Thomas modullar",
         "_wilsonmods_desc": "«UModx» yaratuvchisining rasmiy modullari quyida joylashgan",
-        "_amoremods_title": "🔥 AmoreForever modullar",
+        "_amoremods_title": "☕ AmoreForever modullar",
         "_amoremods_desc": "Fazliddin‘ boshchiligida tuzilgan rasmiy modullari",
+        "_fun_title": "🪩 Ko‘ngilochar modullar",
+        "_fun_desc": "Fun modules — animations, spam, entertainment, etc.",
+        "_chat_title": "👥 Guruh ma‘muriyati yordamchilari",
+        "_chat_desc": (
+            "The collection of tools which will help to moderate your group chat —"
+            " filters, notes, voice recognition, etc."
+        ),
+        "_service_title": "⚙️ Foydali modullar",
+        "_service_desc": (
+            "Really useful modules — account management, link shortener, search engine,"
+            " etc."
+        ),
+        "_downloaders_title": "📥 Yuklab oluvchilar",
+        "_downloaders_desc": (
+            "The collection of tools which will help you download/upload files from/to"
+            " different sources — YouTube, TikTok, Instagram, Spotify, VK Music, etc."
+        ),
         "welcome": "🌟 Salom! Bu <b>«UModx»</b> modullar doʻkoni",
         "preset": (
             "<b>{}:</b>\n🚨 <b>Info:</b> <i>{}</i>\n\n🗃️ <b>Ushbu katalogdagi modullar:</b>\n\n{}"
