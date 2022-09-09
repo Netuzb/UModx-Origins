@@ -83,17 +83,12 @@ PRESETS = {
         "https://heta.hikariatama.ru/vsecoder/hikka_modules/accounttime.py",
         "https://heta.hikariatama.ru/vsecoder/hikka_modules/searx.py",
         "https://heta.hikariatama.ru/iamnalinor/FTG-modules/swmute.py",
-    ],
-    "downloaders": [
         "https://mods.hikariatama.ru/musicdl.py",
-        "https://mods.hikariatama.ru/uploader.py",
         "https://mods.hikariatama.ru/porn.py",
         "https://mods.hikariatama.ru/web2file.py",
-        "https://heta.hikariatama.ru/AmoreForever/amoremods/instsave.py",
         "https://heta.hikariatama.ru/CakesTwix/Hikka-Modules/tikcock.py",
         "https://heta.hikariatama.ru/CakesTwix/Hikka-Modules/InlineYouTube.py",
         "https://heta.hikariatama.ru/CakesTwix/Hikka-Modules/InlineSpotifyDownloader.py",
-        "https://heta.hikariatama.ru/GeekTG/FTG-Modules/downloader.py",
         "https://heta.hikariatama.ru/Den4ikSuperOstryyPer4ik/Astro-modules/dl_yt_previews.py",
     ],
 }
@@ -109,21 +104,21 @@ class ThomPresets(loader.Module):
         "_amoremods_title": "☕ AmoreForever modullar",
         "_amoremods_desc": "Fazliddin‘ boshchiligida tuzilgan rasmiy modullari",
         "_fun_title": "🪩 Ko‘ngilochar modullar",
-        "_fun_desc": "Fun modules — animations, spam, entertainment, etc.",
+        "_fun_desc": "Qiziqarli modullar - animatsiyalar, spam, o‘yin-kulgi va boshqalar.",
         "_chat_title": "👥 Guruh ma‘muriyati yordamchilari",
         "_chat_desc": (
-            "The collection of tools which will help to moderate your group chat —"
-            " filters, notes, voice recognition, etc."
+            "Guruhingizni boshqarishga yordam beradigan vositalar to‘plamlar —"
+            " filtrlar, eslatmalar, ovozni aniqlash va boshqalar."
         ),
         "_service_title": "⚙️ Foydali modullar",
         "_service_desc": (
-            "Really useful modules — account management, link shortener, search engine,"
-            " etc."
+            "Haqiqatan ham foydali modullar — hisobni boshqarish, havolani qisqartiruvchi, qidiruv tizimi,"
+            " va boshqalar."
         ),
         "_downloaders_title": "📥 Yuklab oluvchilar",
         "_downloaders_desc": (
-            "The collection of tools which will help you download/upload files from/to"
-            " different sources — YouTube, TikTok, Instagram, Spotify, VK Music, etc."
+            "Fayllarni yuklab olish/yuklashda yordam beradigan vositalar to‘plami"
+            " turli manbalar - YouTube, TikTok, Instagram, Spotify, VK Music va boshqalar."
         ),
         "welcome": "🌟 Salom! Bu <b>«UModx»</b> modullar doʻkoni",
         "preset": (
