@@ -124,6 +124,18 @@ class SettingsMod(loader.Module):
             if watcher.__self__.__class__.strings is not None
         ], self._db.get(main.__name__, "disabled_watchers", {})
 
+    @loader.unrestricted
+    async def umcmd(self, message: Message):
+        """Versiya haqida maʼlumot"""
+        version = f'<i>{".".join(list(map(str, list(main.__version__))))}</i>'
+        me = (
+            "<b><a"
+            f' href="tg://user?id={self._me.id}">{utils.escape_html(get_display_name(self._me))}</a></b>'
+        )
+        umodx = f'<emoji document_id="5235816140302721259">👑</emoji> <b>UMODX</b> - ikkinchi talqin\n\n<emoji document_id="5785175271011259591">🌀</emoji> <b>Boshqaruvchi</b>: <i>{me}</i>\n<emoji document_id="5785363566672482185">🔔</emoji> <b>Versiya</b>: <i>{version}</i>'
+        await message.edit(umodx)
+        return
+
     async def purgecmd(self, message):
         """> Barcha habarlarni oʻchirish """
         if not message.is_reply:
