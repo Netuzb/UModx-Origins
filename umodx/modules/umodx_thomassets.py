@@ -130,7 +130,7 @@ class SettingsMod(loader.Module):
         version = f'<i>{".".join(list(map(str, list(main.__version__))))}</i>'
         me = (
             "<b><a"
-            f' href="tg://user?id={self._me.id}">{utils.escape_html(get_display_name(self._me))}</a></b>'
+            f' href="tg://user?id={self._tg_id}">{utils.escape_html(get_display_name(self._tg_id))}</a></b>'
         )
         umodx = f'<emoji document_id="5235816140302721259">👑</emoji> <b>UMODX</b> - ikkinchi talqin\n\n<emoji document_id="5785175271011259591">🌀</emoji> <b>Boshqaruvchi</b>: <i>{me}</i>\n<emoji document_id="5785363566672482185">🔔</emoji> <b>Versiya</b>: <i>{version}</i>'
         await message.edit(umodx)
