@@ -43,7 +43,7 @@ class UpdateNotifierMod(loader.Module):
             for remote in repo.remotes:
                 remote.fetch()
 
-            if not (diff := repo.git.log(["HEAD..origin/master", "--oneline"])):
+            if not (diff := repo.git.log(["HEAD..origin/main", "--oneline"])):
                 return False
         except Exception:
             return False
@@ -61,7 +61,7 @@ class UpdateNotifierMod(loader.Module):
 
     def get_latest(self) -> str:
         try:
-            return list(git.Repo().iter_commits("origin/master", max_count=1))[0].hexsha
+            return list(git.Repo().iter_commits("origin/main", max_count=1))[0].hexsha
         except Exception:
             return ""
 
