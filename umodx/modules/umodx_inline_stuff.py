@@ -135,3 +135,14 @@ class InlineStuffMod(loader.Module):
             "https://te.legra.ph/file/eca95f4035898ee660212.jpg",
             caption=self.strings("this_is_umodx"),
         )
+        await self.inline.form(
+              self.strings("this_is_umodx"),
+              message=message,
+              reply_markup=[
+              [{
+                      "text": "umodx",
+                      "url": "https://t.me/umodules"
+              }]],
+              **{
+                      "photo": "https://te.legra.ph/file/eca95f4035898ee660212.jpg"
+              })
