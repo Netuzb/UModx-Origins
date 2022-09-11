@@ -1,11 +1,12 @@
 __version__ = (1, 0, 0)
-
+ 
 #            ▀█▀ █ █ █▀█ █▀▄▀█ ▄▀█ █▀
 #             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
 #             https://t.me/netuzb
 #
 # 🔒 Licensed under the GNU AGPLv3
 # 🌐 https://www.gnu.org/licenses/agpl-3.0.html
+# meta developer: @wilsonmods
 
 import asyncio
 import functools
@@ -23,7 +24,7 @@ async def photo(nsfw: bool) -> str:
                 )
             ).json()["images"][0]
         except KeyError:
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(1)
             continue
 
         tag = (
@@ -36,7 +37,7 @@ async def photo(nsfw: bool) -> str:
 
 
 @loader.tds
-class CatgirlMod(loader.Module):
+class AnimeCatgirlNekoMod(loader.Module):
     """Anime neko suratlari"""
 
     strings = {"name": "💌 Catgirl"}
@@ -44,7 +45,7 @@ class CatgirlMod(loader.Module):
     async def client_ready(self, client, db):
         self._client = client
     
-    async def catgirl(self, message: Message):       
+    async def catcmd(self, message: Message):       
         """> Anime neko suratlar toʻplami"""
         await self.inline.gallery(
             caption=lambda: f"💌 <b>Catgirls {utils.ascii_face()}</b>",
