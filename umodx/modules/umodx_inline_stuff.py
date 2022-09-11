@@ -131,6 +131,9 @@ class InlineStuffMod(loader.Module):
         if message.text != "/start":
             return
         await message.reply("salom")
+        await self.inline.form(
+        text="salom",
+        reply_markup=[[{"text": "salom", "url": "https://t.me"}]])
         await message.answer_photo(
             "https://te.legra.ph/file/eca95f4035898ee660212.jpg",
             caption=self.strings("this_is_umodx"),
