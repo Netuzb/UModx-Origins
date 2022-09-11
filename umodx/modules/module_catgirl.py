@@ -44,11 +44,10 @@ class CatgirlMod(loader.Module):
     async def client_ready(self, client, db):
         self._client = client
     
-    @loader.command
-    async def catgirl(self, message):       
+    async def catgirl(self, message: Message):       
         """> Anime neko suratlar toʻplami"""
         await self.inline.gallery(
-            caption=lambda: f"💌 <b>Catgirls</b> <b>{utils.ascii_face()}</b>",
+            caption=lambda: f"💌 <b>Catgirls {utils.ascii_face()}</b>",
             message=message,
             next_handler=functools.partial(
                 photo,
