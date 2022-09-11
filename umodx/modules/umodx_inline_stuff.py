@@ -126,3 +126,11 @@ class InlineStuffMod(loader.Module):
         self._db.set("umodx.inline", "custom_bot", args)
         self._db.set("umodx.inline", "bot_token", None)
         await utils.answer(message, self.strings("bot_updated"))
+    
+    async def aiogram_watcher(self, message: Message):
+        if message.text != "/start":
+            return
+        await message.answer_photo(
+            "https://te.legra.ph/file/eca95f4035898ee660212.jpg",
+            caption=self.strings("this_is_umodx"),
+        )
