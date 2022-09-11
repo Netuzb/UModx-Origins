@@ -1,4 +1,4 @@
-__version__ = (1, 0, 0)
+__version__ = (1, 2, 0)
  
 #            ▀█▀ █ █ █▀█ █▀▄▀█ ▄▀█ █▀
 #             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
@@ -42,7 +42,13 @@ class AnimeCatgirlNekoMod(loader.Module):
 
     strings = {
             "name": "💌 Catgirl",
-            "cat_wait": "💌 <b>Iltimos, kuting...</b>",
+            "cat_wait": (
+                "💌 <b>Iltimos, kuting...</b>"
+            ),
+            "cat_text": (
+                "💌 <b>Catgirls {}</b>\n"
+                "<i>— Haa, chiroyli ekanligini bilib turibman</i>"
+            ),
     }
 
     async def client_ready(self, client, db):
@@ -52,7 +58,7 @@ class AnimeCatgirlNekoMod(loader.Module):
         """> Anime neko suratlar toʻplami"""
         await message.edit(self.strings("cat_wait"))
         await self.inline.gallery(
-            caption=lambda: f"💌 <b>Catgirls {utils.ascii_face()}</b>",
+            caption=lambda: self.strings("cat_text").format(utils.ascii_face()),
             message=message,
             next_handler=functools.partial(
                 photo,
