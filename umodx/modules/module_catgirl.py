@@ -40,13 +40,17 @@ async def photo(nsfw: bool) -> str:
 class AnimeCatgirlNekoMod(loader.Module):
     """Anime neko suratlari"""
 
-    strings = {"name": "💌 Catgirl"}
+    strings = {
+            "name": "💌 Catgirl",
+            "cat_wait": "💌 <b>Iltimos, kuting...</b>",
+    }
 
     async def client_ready(self, client, db):
         self._client = client
     
     async def catcmd(self, message: Message):       
         """> Anime neko suratlar toʻplami"""
+        await message.edit(self.strings("cat_wait"))
         await self.inline.gallery(
             caption=lambda: f"💌 <b>Catgirls {utils.ascii_face()}</b>",
             message=message,
