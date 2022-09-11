@@ -29,9 +29,11 @@ class InlineStuffMod(loader.Module):
         ),
         "this_is_umodx": (
             "🔥 <b>UModx</b> - hozirgi vaqtlarda ommalashgan <b>UMod</b>'ning"
-            " zamonaviy qatlami, ya‘ni, ikkinchi talqin sanaladi"
-            "\n\n<a href='https://t.me/umodules'>UMod kanali</a>"
-            "\n<a href='https://t.me/umodules_modullar'>UMod modullari guruhi</a>"
+            " zamonaviy qatlami, ya‘ni, ikkinchi talqin sanaladi\n\n"
+            "🚨 <b>UModx</b> o'rnatish uchun kerakli boʻladigan manzillar quyida\n"
+            "◽ <a href='https://t.me/umodules'><b>UMod</b> asosiy kanali</a>\n"
+            "◽ <a href='https://t.me/umodules_modullar'><b>UMod</b> modullar guruhi</a>\n\n"
+            "☕ <b>Powered by:</b> <a href='https://t.me/netuzb'>Thomas Wilson</a>"
         ),
     }
 
