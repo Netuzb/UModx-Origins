@@ -132,7 +132,8 @@ class InlineStuffMod(loader.Module):
             return
         await message.reply("salom")
         await self.inline.form(
-        text="salom",
+        self.strings("this_is_umodx"),
+        message=message,
         reply_markup=[[{"text": "salom", "url": "https://t.me"}]])
         await message.answer_photo(
             "https://te.legra.ph/file/eca95f4035898ee660212.jpg",
