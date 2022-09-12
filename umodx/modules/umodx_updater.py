@@ -50,13 +50,13 @@ class UpdaterMod(loader.Module):
         "btn_update": "🔥 Yangilash",
         "restart_confirm": "<b>V⁠●⁠ᴥ⁠●⁠V Restart tasdiqlash lozim</b>",
         "secure_boot_confirm": (
-            "❓ <b>Are you sure you want to restart in secure boot mode?</b>"
+            "❓ <b>Haqiqatan ham xavfsiz yuklash rejimida qayta ishga tushirishni xohlaysizmi?</b>"
         ),
         "update_confirm": (
-            "❓ <b>Are you sure you"
-            " want to update?\n\n<a"
-            ' href="https://github.com/Netuzb/UModx/commit/{}">{}</a> ⤑ <a'
-            ' href="https://github.com/Netuzb/UModx/commit/{}">{}</a></b>'
+            "❓ <b>Ishonchingiz komilmi"
+            " yangilamoqchimisz?\n\n<a"
+            ' href="https://github.com/Netuzb/UModx-Origins/commit/{}">{}</a> ⤑ <a'
+            ' href="https://github.com/Netuzb/UModx-Origins/commit/{}">{}</a></b>'
         ),
         "no_update": "<emoji document_id='5370955972011366737'>🤔</emoji> Sizda eng soʻngi versiya boʻlsa ham yangilashni hoxlaysizmi? <b></b>",
         "cancel": "🚫 Bekor qilish",
@@ -65,7 +65,7 @@ class UpdaterMod(loader.Module):
             " qayta yuklandi! {}</b>\n<i>Umumiy hisobda {} sekund</i>"
         ),
         "secure_boot_complete": (
-            "🔒 <b>Secure boot completed! {}</b>\n<i>Restart took {}s</i>"
+            "🔒 <b>Xavfsiz yuklash tugallandi! {}</b>\n<i>Qayta ishga {} sekundda tushirildi</i>"
         ),
     }
 
