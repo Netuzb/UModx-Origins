@@ -16,7 +16,7 @@ from aiogram.types import (
     InputMediaAnimation,
     InputMediaPhoto,
 )
-from aiogram.utils.exceptions import BadRequest, InvalidHTTPUrlContent, RetryAfter
+from aiogram.utils.exceptions import BadRequest, RetryAfter
 
 from telethon.tl.types import Message
 from telethon.errors.rpcerrorlist import ChatSendInlineForbiddenError
@@ -49,18 +49,18 @@ class Gallery(InlineUnit):
         self,
         message: Union[Message, int],
         next_handler: Union[callable, List[str]],
-        caption: Optional[Union[List[str], str, callable]] = "",
+        caption: Union[List[str], str, callable] = "",
         *,
         custom_buttons: Optional[Union[List[List[dict]], List[dict], dict]] = None,
-        force_me: Optional[bool] = False,
+        force_me: bool = False,
         always_allow: Optional[list] = None,
-        manual_security: Optional[bool] = False,
-        disable_security: Optional[bool] = False,
-        ttl: Optional[Union[int, bool]] = False,
+        manual_security: bool = False,
+        disable_security: bool = False,
+        ttl: Union[int, bool] = False,
         on_unload: Optional[callable] = None,
-        preload: Optional[Union[bool, int]] = False,
-        gif: Optional[bool] = False,
-        silent: Optional[bool] = False,
+        preload: Union[bool, int] = False,
+        gif: bool = False,
+        silent: bool = False,
         _reattempt: bool = False,
     ) -> Union[bool, InlineMessage]:
         """
@@ -85,7 +85,7 @@ class Gallery(InlineUnit):
                                 If you want to avoid this, pass `manual_security=True`
         :param disable_security: By default, umodx will try to inherit inline buttons security from the caller (command)
                                  If you want to disable all security checks on this gallery in particular, pass `disable_security=True`
-        :param silent: Whether the gallery must be sent silently (w/o "Loading inline gallery..." message)
+        :param silent: Whether the gallery must be sent silently (w/o "Opening gallery..." message)
         :return: If gallery is sent, returns :obj:`InlineMessage`, otherwise returns `False`
         """
         with contextlib.suppress(AttributeError):
@@ -221,9 +221,9 @@ class Gallery(InlineUnit):
                     (
                         utils.get_platform_emoji()
                         if self._client.umodx_me.premium and CUSTOM_EMOJIS
-                        else "🔥"
+                        else "🌘"
                     )
-                    + " <b>umodx inline...</b>"
+                    + " <b>Opening gallery...</b>"
                 )
             except Exception:
                 status_message = None
@@ -504,7 +504,7 @@ class Gallery(InlineUnit):
                 media=self._get_current_media(unit_id),
                 reply_markup=self._gallery_markup(unit_id),
             )
-        except (InvalidHTTPUrlContent, BadRequest):
+        except BadRequest:
             logger.debug("Error fetching photo content, attempting load next one")
             del self._units[unit_id]["photos"][self._units[unit_id]["current_index"]]
             self._units[unit_id]["current_index"] -= 1
@@ -564,7 +564,7 @@ class Gallery(InlineUnit):
                             *(
                                 [
                                     {
-                                        "text": "back",
+                                        "text": "⏪",
                                         "callback": callback,
                                         "args": (unit["current_index"] - 1,),
                                     }
@@ -575,9 +575,9 @@ class Gallery(InlineUnit):
                             *(
                                 [
                                     {
-                                        "text": "stop"
+                                        "text": "🛑"
                                         if unit.get("slideshow", False)
-                                        else "slideshow",
+                                        else "⏱",
                                         "callback": callback,
                                         "args": ("slideshow",),
                                     }
@@ -591,7 +591,7 @@ class Gallery(InlineUnit):
                             *(
                                 [
                                     {
-                                        "text": "next",
+                                        "text": "⏩",
                                         "callback": callback,
                                         "args": (unit["current_index"] + 1,),
                                     }
@@ -605,7 +605,7 @@ class Gallery(InlineUnit):
                         ]
                     ]
                 )
-                + [[{"text": "🔻 Yopish", "callback": callback, "args": ("close",)}]]
+                + [[{"text": "🔻 Close", "callback": callback, "args": ("close",)}]]
             )
         )
 

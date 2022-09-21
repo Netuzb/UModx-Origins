@@ -1,10 +1,3 @@
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import asyncio
 import contextlib
 import copy
@@ -40,13 +33,13 @@ class List(InlineUnit):
         message: Union[Message, int],
         strings: _List[str],
         *,
-        force_me: Optional[bool] = False,
+        force_me: bool = False,
         always_allow: Optional[list] = None,
-        manual_security: Optional[bool] = False,
-        disable_security: Optional[bool] = False,
-        ttl: Optional[Union[int, bool]] = False,
+        manual_security: bool = False,
+        disable_security: bool = False,
+        ttl: Union[int, bool] = False,
         on_unload: Optional[callable] = None,
-        silent: Optional[bool] = False,
+        silent: bool = False,
         custom_buttons: Optional[Union[_List[_List[dict]], _List[dict], dict]] = None,
     ) -> Union[bool, InlineMessage]:
         """
@@ -64,7 +57,7 @@ class List(InlineUnit):
                                 If you want to avoid this, pass `manual_security=True`
         :param disable_security: By default, umodx will try to inherit inline buttons security from the caller (command)
                                  If you want to disable all security checks on this list in particular, pass `disable_security=True`
-        :param silent: Whether the list must be sent silently (w/o "Loading inline list..." message)
+        :param silent: Whether the list must be sent silently (w/o "Opening list..." message)
         :param custom_buttons: Custom buttons to add above native ones
         :return: If list is sent, returns :obj:`InlineMessage`, otherwise returns `False`
         """
@@ -165,7 +158,7 @@ class List(InlineUnit):
                         if self._client.umodx_me.premium and CUSTOM_EMOJIS
                         else "🌘"
                     )
-                    + " <b>Loading inline list...</b>"
+                    + " <b>Opening list...</b>"
                 )
             except Exception:
                 status_message = None

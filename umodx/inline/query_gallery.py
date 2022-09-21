@@ -1,10 +1,3 @@
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import asyncio
 import logging
 import time
@@ -24,8 +17,8 @@ class QueryGallery(InlineUnit):
         query: InlineQuery,
         items: List[dict],
         *,
-        force_me: Optional[bool] = False,
-        disable_security: Optional[bool] = False,
+        force_me: bool = False,
+        disable_security: bool = False,
         always_allow: Optional[list] = None,
     ) -> bool:
         """
@@ -123,7 +116,7 @@ class QueryGallery(InlineUnit):
                     title=i["title"],
                     description=i["description"],
                     input_message_content=InputTextMessageContent(
-                        f"🌘 <b>Loading umodx gallery...</b>\n<i>#id: {id_}</i>",
+                        f"🌘 <b>Opening gallery...</b>\n<i>#id: {id_}</i>",
                         "HTML",
                         disable_web_page_preview=True,
                     ),
