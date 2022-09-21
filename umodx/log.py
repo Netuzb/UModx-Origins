@@ -1,28 +1,5 @@
 """Main logging part"""
 
-#    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2021 The Authors
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import asyncio
 import contextlib
 import inspect
@@ -38,9 +15,10 @@ from logging.handlers import RotatingFileHandler
 
 from . import utils
 from .types import Module, BotInlineCall
+from .tl_cache import CustomTelegramClient
 
 
-class umodxException:
+class UModxException:
     def __init__(self, message: str, local_vars: str, full_stack: str):
         self.message = message
         self.local_vars = local_vars
@@ -53,7 +31,7 @@ class umodxException:
         exc_value: Exception,
         tb: traceback.TracebackException,
         stack: Optional[List[inspect.FrameInfo]] = None,
-    ) -> "umodxException":
+    ) -> "UModxException":
         def to_hashable(dictionary: dict) -> dict:
             dictionary = dictionary.copy()
             for key, value in dictionary.items():
@@ -64,8 +42,10 @@ class umodxException:
                     ):
                         dictionary[key] = "<Database>"
 
-                    if isinstance(value, telethon.TelegramClient):
-                        dictionary[key] = "<TelegramClient>"
+                    if isinstance(
+                        value, (telethon.TelegramClient, CustomTelegramClient)
+                    ):
+                        dictionary[key] = f"<{value.__class__.__name__}>"
 
                     dictionary[key] = to_hashable(value)
                 else:
@@ -130,7 +110,7 @@ class umodxException:
             else ""
         )
 
-        return umodxException(
+        return UModxException(
             message=(
                 f"<b>🚫 Error!</b>\n{cause_mod}\n<b>🗄 Where:</b>"
                 f" <code>{utils.escape_html(filename)}:{lineno}</code><b>"
@@ -189,7 +169,7 @@ class TelegramLogsHandler(logging.Handler):
         """Return a list of logging entries"""
         return self.handledbuffer + self.buffer
 
-    def dumps(self, lvl: Optional[int] = 0, client_id: Optional[int] = None) -> list:
+    def dumps(self, lvl: int = 0, client_id: Optional[int] = None) -> list:
         """Return all entries of minimum level as list of strings"""
         return [
             self.targets[0].format(record)
@@ -202,7 +182,7 @@ class TelegramLogsHandler(logging.Handler):
         self,
         call: BotInlineCall,
         bot: "aiogram.Bot",  # type: ignore
-        item: umodxException,
+        item: UModxException,
     ):
         chunks = (
             item.message
@@ -260,7 +240,7 @@ class TelegramLogsHandler(logging.Handler):
                     ),
                 )
                 for item in self.tg_buff
-                if isinstance(item[0], umodxException)
+                if isinstance(item[0], UModxException)
                 and (not item[1] or item[1] == client_id or self.force_send_all)
             ]
             for client_id in self._mods
@@ -329,7 +309,7 @@ class TelegramLogsHandler(logging.Handler):
                 logging.debug(record.__dict__)
                 self.tg_buff += [
                     (
-                        umodxException.from_exc_info(
+                        UModxException.from_exc_info(
                             *record.exc_info,
                             stack=record.__dict__.get("stack", None),
                         ),

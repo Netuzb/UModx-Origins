@@ -1,28 +1,5 @@
 """Registers modules"""
 
-#    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2021 The Authors
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import asyncio
 import contextlib
 import inspect
@@ -38,7 +15,6 @@ import importlib.util
 import importlib.machinery
 from functools import partial, wraps
 
-from telethon import TelegramClient
 from telethon.tl.types import Message, InputPeerNotifySettings, Channel
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from telethon.hints import EntityLike
@@ -68,6 +44,7 @@ from .types import (
 from .inline.core import InlineManager
 from .inline.types import InlineCall
 from .translations import Strings, Translator
+from .database import Database
 
 import gc as _gc
 import types as _types
@@ -512,8 +489,8 @@ class Modules:
 
     def __init__(
         self,
-        client: TelegramClient,
-        db: "Database",  # type: ignore
+        client: "CustomTelegramClient",  # type: ignore
+        db: Database,
         allclients: list,
         translator: Translator,
     ):

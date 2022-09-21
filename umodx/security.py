@@ -1,33 +1,9 @@
 """Checks the commands' security"""
 
-#    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2021 The Authors
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import logging
 import time
 from typing import Optional
 
-from telethon import TelegramClient
 from telethon.hints import EntityLike
 from telethon.utils import get_display_name
 from telethon.tl.functions.messages import GetFullChatRequest
@@ -35,6 +11,7 @@ from telethon.tl.types import ChatParticipantAdmin, ChatParticipantCreator, Mess
 
 from . import main, utils
 from .database import Database
+from .tl_cache import CustomTelegramClient
 
 logger = logging.getLogger(__name__)
 
@@ -154,7 +131,7 @@ def _sec(func: callable, flags: int) -> callable:
 
 
 class SecurityManager:
-    def __init__(self, client: TelegramClient, db: Database):
+    def __init__(self, client: CustomTelegramClient, db: Database):
         self._client = client
         self._db = db
         self._cache = {}
@@ -182,11 +159,11 @@ class SecurityManager:
             self._owner.append(self._client.tg_id)
 
         for info in self._tsec_user.copy():
-            if info["expires"] < time.time():
+            if info["expires"] and info["expires"] < time.time():
                 self._tsec_user.remove(info)
 
         for info in self._tsec_chat.copy():
-            if info["expires"] < time.time():
+            if info["expires"] and info["expires"] < time.time():
                 self._tsec_chat.remove(info)
 
     def add_rule(
@@ -210,7 +187,7 @@ class SecurityManager:
                 "target": target.id,
                 "rule_type": rule.split("/")[0],
                 "rule": rule.split("/", maxsplit=1)[1],
-                "expires": int(time.time() + duration),
+                "expires": int(time.time() + duration) if duration else 0,
                 "entity_name": get_display_name(target),
                 "entity_url": utils.get_entity_url(target),
             }

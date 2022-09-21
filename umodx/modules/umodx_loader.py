@@ -146,7 +146,7 @@ class LoaderMod(loader.Module):
         "add_repo_config_doc": "Additional repos to load from",
         "share_link_doc": "Share module link in result message of .dlmod",
         "modlink": (
-            "\n\n<emoji document_id='6037284117505116849'>🌐</emoji> <b>Link:"
+            "\n\n<emoji document_id='6037284117505116849'>🌐</emoji> <b>Manzil havolasi:"
             " </b><code>{}</code>"
         ),
         "blob_link": (
@@ -211,7 +211,7 @@ class LoaderMod(loader.Module):
         self.config = loader.ModuleConfig(
             loader.ConfigValue(
                 "MODULES_REPO",
-                "https://github.com/thomasmod/hikkamods",
+                "https://mods.hikariatama.ru",
                 lambda: self.strings("repo_config_doc"),
                 validator=loader.validators.Link(),
             ),
@@ -219,10 +219,10 @@ class LoaderMod(loader.Module):
                 "ADDITIONAL_REPOS",
                 # Currenly the trusted developers are specified
                 [
+                    "https://github.com/thomasmod/hikkamods/raw/main",
                     "https://github.com/hikariatama/host/raw/master",
                     "https://github.com/MoriSummerz/ftg-mods/raw/main",
                     "https://gitlab.com/CakesTwix/friendly-userbot-modules/-/raw/master",
-                    "https://github.com/thomasmod/hikkamods/raw/main",
                 ],
                 lambda: self.strings("add_repo_config_doc"),
                 validator=loader.validators.Series(validator=loader.validators.Link()),

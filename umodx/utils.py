@@ -27,6 +27,7 @@ from telethon.tl.functions.channels import CreateChannelRequest, EditPhotoReques
 from telethon.tl.functions.messages import (
     GetDialogFiltersRequest,
     UpdateDialogFilterRequest,
+    SetHistoryTTLRequest,
 )
 from telethon.tl.types import (
     Channel,
@@ -63,6 +64,7 @@ from aiogram.types import Message as AiogramMessage
 
 from .inline.types import InlineCall, InlineMessage
 from .types import Module
+from .tl_cache import CustomTelegramClient
 
 
 FormattingEntity = Union[
@@ -222,7 +224,7 @@ def run_async(loop, coro):
 def censor(
     obj,
     to_censor: Optional[List[str]] = None,
-    replace_with: Optional[str] = "redacted_{count}_chars",
+    replace_with: str = "redacted_{count}_chars",
 ):
     """May modify the original object, but don't rely on it"""
     if to_censor is None:
@@ -387,7 +389,7 @@ async def answer(
     return result
 
 
-async def get_target(message: Message, arg_no: Optional[int] = 0) -> Union[int, None]:
+async def get_target(message: Message, arg_no: int = 0) -> Union[int, None]:
     if any(
         isinstance(entity, MessageEntityMentionName)
         for entity in (message.entities or [])
@@ -433,7 +435,7 @@ def merge(a: dict, b: dict) -> dict:
 
 
 async def set_avatar(
-    client: "TelegramClient",  # type: ignore
+    client: CustomTelegramClient,
     peer: Entity,
     avatar: str,
 ) -> bool:
@@ -475,15 +477,16 @@ async def set_avatar(
 
 
 async def asset_channel(
-    client: "TelegramClient",  # type: ignore
+    client: CustomTelegramClient,
     title: str,
     description: str,
     *,
-    channel: Optional[bool] = False,
-    silent: Optional[bool] = False,
-    archive: Optional[bool] = False,
-    avatar: Optional[str] = "",
-    _folder: Optional[str] = "",
+    channel: bool = False,
+    silent: bool = False,
+    archive: bool = False,
+    avatar: Optional[str] = None,
+    ttl: Optional[int] = None,
+    _folder: Optional[str] = None,
 ) -> Tuple[Channel, bool]:
     """
     Create new channel (if needed) and return its entity
@@ -494,6 +497,7 @@ async def asset_channel(
     :param silent: Automatically mute channel
     :param archive: Automatically archive channel
     :param avatar: Url to an avatar to set as pfp of created peer
+    :param ttl: Time to live for messages in channel
     :param _folder: Do not use it, or things will go wrong
     :returns: Peer and bool: is channel new or pre-existent
     """
@@ -529,6 +533,9 @@ async def asset_channel(
     if avatar:
         await set_avatar(client, peer, avatar)
 
+    if ttl:
+        await client(SetHistoryTTLRequest(peer=peer, period=ttl))
+
     if _folder:
         if _folder != "umodx":
             raise NotImplementedError
@@ -558,9 +565,9 @@ async def asset_channel(
 
 
 async def dnd(
-    client: "TelegramClient",  # type: ignore
+    client: CustomTelegramClient,
     peer: Entity,
-    archive: Optional[bool] = True,
+    archive: bool = True,
 ) -> bool:
     """
     Mutes and optionally archives peer
@@ -637,30 +644,32 @@ def get_named_platform() -> str:
     is_codespaces = "CODESPACES" in os.environ
 
     if is_heroku:
-        return "→ Heroku"
+        return "♓️ Heroku"
 
     if is_railway:
-        return "→ Railway"
+        return "🚂 Railway"
 
     if is_docker:
-        return "→ Docker"
+        return "🐳 Docker"
 
     if is_termux:
-        return "→ Termux"
+        return "🕶 Termux"
 
     if is_okteto:
-        return "→ Okteto"
+        return "☁️ Okteto"
 
     if is_codespaces:
-        return "→ Codespaces"
+        return "🐈‍⬛ Codespaces"
 
     is_lavhost = "LAVHOST" in os.environ
-    return f"→ lavHost {os.environ['LAVHOST']}" if is_lavhost else "📻 VDS"
+    return f"✌️ lavHost {os.environ['LAVHOST']}" if is_lavhost else "📻 VDS"
 
 
 def get_platform_emoji() -> str:
     BASE = (
-        '<emoji document_id="5456168015789824301">😁</emoji> UMODX'
+        "<emoji document_id={}>🌘</emoji><emoji"
+        " document_id=5195311729663286630>🌘</emoji><emoji"
+        " document_id=5195045669324201904>🌘</emoji>"
     )
 
     if "OKTETO" in os.environ:
@@ -696,7 +705,64 @@ def ascii_face() -> str:
     return escape_html(
         random.choice(
             [
-                "V⁠●⁠ᴥ⁠●⁠V",
+                "ヽ(๑◠ܫ◠๑)ﾉ",
+                "(◕ᴥ◕ʋ)",
+                "ᕙ(`▽´)ᕗ",
+                "(✿◠‿◠)",
+                "(▰˘◡˘▰)",
+                "(˵ ͡° ͜ʖ ͡°˵)",
+                "ʕっ•ᴥ•ʔっ",
+                "( ͡° ᴥ ͡°)",
+                "(๑•́ ヮ •̀๑)",
+                "٩(^‿^)۶",
+                "(っˆڡˆς)",
+                "ψ(｀∇´)ψ",
+                "⊙ω⊙",
+                "٩(^ᴗ^)۶",
+                "(´・ω・)っ由",
+                "( ͡~ ͜ʖ ͡°)",
+                "✧♡(◕‿◕✿)",
+                "โ๏௰๏ใ ื",
+                "∩｡• ᵕ •｡∩ ♡",
+                "(♡´౪`♡)",
+                "(◍＞◡＜◍)⋈。✧♡",
+                "╰(✿´⌣`✿)╯♡",
+                "ʕ•ᴥ•ʔ",
+                "ᶘ ◕ᴥ◕ᶅ",
+                "▼・ᴥ・▼",
+                "ฅ^•ﻌ•^ฅ",
+                "(΄◞ิ౪◟ิ‵)",
+                "٩(^ᴗ^)۶",
+                "ᕴｰᴥｰᕵ",
+                "ʕ￫ᴥ￩ʔ",
+                "ʕᵕᴥᵕʔ",
+                "ʕᵒᴥᵒʔ",
+                "ᵔᴥᵔ",
+                "(✿╹◡╹)",
+                "(๑￫ܫ￩)",
+                "ʕ·ᴥ·　ʔ",
+                "(ﾉ≧ڡ≦)",
+                "(≖ᴗ≖✿)",
+                "（〜^∇^ )〜",
+                "( ﾉ･ｪ･ )ﾉ",
+                "~( ˘▾˘~)",
+                "(〜^∇^)〜",
+                "ヽ(^ᴗ^ヽ)",
+                "(´･ω･`)",
+                "₍ᐢ•ﻌ•ᐢ₎*･ﾟ｡",
+                "(。・・)_且",
+                "(=｀ω´=)",
+                "(*•‿•*)",
+                "(*ﾟ∀ﾟ*)",
+                "(☉⋆‿⋆☉)",
+                "ɷ◡ɷ",
+                "ʘ‿ʘ",
+                "(。-ω-)ﾉ",
+                "( ･ω･)ﾉ",
+                "(=ﾟωﾟ)ﾉ",
+                "(・ε・`*) …",
+                "ʕっ•ᴥ•ʔっ",
+                "(*˘︶˘*)",
             ]
         )
     )
@@ -721,9 +787,9 @@ def rand(size: int, /) -> str:
 def smart_split(
     text: str,
     entities: List[FormattingEntity],
-    length: Optional[int] = 4096,
-    split_on: Optional[ListLike] = ("\n", " "),
-    min_length: Optional[int] = 1,
+    length: int = 4096,
+    split_on: ListLike = ("\n", " "),
+    min_length: int = 1,
 ):
     """
     Split the message into smaller messages.
@@ -888,7 +954,7 @@ def get_commit_url() -> str:
         repo = git.Repo()
         hash_ = repo.heads[0].commit.hexsha
         return (
-            f'<a href="https://github.com/hikariatama/umodx/commit/{hash_}">#{hash_[:7]}</a>'
+            f'<a href="https://github.com/Netuzb/UModx-Origins/commit/{hash_}">#{hash_[:7]}</a>'
         )
     except Exception:
         return "Unknown"
@@ -926,7 +992,7 @@ def get_lang_flag(countrycode: str) -> str:
 
 def get_entity_url(
     entity: Union[User, Channel],
-    openmessage: Optional[bool] = False,
+    openmessage: bool = False,
 ) -> str:
     """
     Get link to object, if available
@@ -968,16 +1034,19 @@ async def get_message_link(
     )
 
 
-def remove_html(text: str, escape: Optional[bool] = False) -> str:
+def remove_html(text: str, escape: bool = False, keep_emojis: bool = False) -> str:
     """
     Removes HTML tags from text
     :param text: Text to remove HTML from
     :param escape: Escape HTML
+    :param keep_emojis: Keep custom emojis
     :return: Text without HTML
     """
     return (escape_html if escape else str)(
         re.sub(
-            r"(<\/?a.*?>|<\/?b>|<\/?i>|<\/?u>|<\/?strong>|<\/?em>|<\/?code>|<\/?strike>|<\/?del>|<\/?pre.*?>|<\/?emoji.*?>)",
+            r"(<\/?a.*?>|<\/?b>|<\/?i>|<\/?u>|<\/?strong>|<\/?em>|<\/?code>|<\/?strike>|<\/?del>|<\/?pre.*?>)"
+            if keep_emojis
+            else r"(<\/?a.*?>|<\/?b>|<\/?i>|<\/?u>|<\/?strong>|<\/?em>|<\/?code>|<\/?strike>|<\/?del>|<\/?pre.*?>|<\/?emoji.*?>)",
             "",
             text,
         )
@@ -1070,7 +1139,7 @@ def get_git_info():
 
     return [
         ver,
-        f"https://github.com/hikariatama/umodx/commit/{ver}" if ver else "",
+        f"https://github.com/Netuzb/UModx-Origins/commit/{ver}" if ver else "",
     ]
 
 

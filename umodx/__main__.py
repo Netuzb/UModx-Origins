@@ -1,28 +1,5 @@
 """Entry point. Checks for user and starts main script"""
 
-#    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2021 The Authors
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import atexit
 import getpass
 import os
@@ -36,7 +13,7 @@ if (
     and "DOCKER" not in os.environ
 ):
     print("🚫" * 15)
-    print("You attempted to run umodx on behalf of root user")
+    print("You attempted to run UModx on behalf of root user")
     print("Please, create a new user and restart script")
     print("If this action was intentional, pass --root argument instead")
     print("🚫" * 15)
@@ -69,7 +46,7 @@ def deps(error):
 
 
 def restart():
-    if "umodx_DO_NOT_RESTART" in os.environ:
+    if "UMODX_DO_NOT_RESTART" in os.environ:
         print("Got in a loop, exiting")
         sys.exit(0)
 
@@ -91,7 +68,7 @@ def restart():
         )
     )
 
-    os.environ["umodx_DO_NOT_RESTART"] = "1"
+    os.environ["UMODX_DO_NOT_RESTART"] = "1"
 
     sys.exit(0)
 
@@ -102,21 +79,23 @@ elif __package__ != "umodx":  # In case they did python __main__.py
     print("🚫 Error: you cannot run this as a script; you must execute as a package")
 else:
     try:
-        import telethon  # noqa: F401
+        # If telethon is not installed, just skip to a part of main startup
+        # then main.py will through an error and re-install all deps
+        import telethon
     except Exception:
         pass
     else:
         try:
             # This is used as verification markers to ensure that supported
             # version is installed
-            from telethon.tl.types import MessageEntityCustomEmoji  # noqa: F401
-            from telethon.extensions.html import CUSTOM_EMOJIS  # noqa: F401
+            from telethon.tl.types import MessageEntityCustomEmoji  # skipcq
+            from telethon.extensions.html import CUSTOM_EMOJIS  # skipcq
             import telethon
 
-            if tuple(map(int, telethon.__version__.split("."))) < (1, 24, 8):
+            if tuple(map(int, telethon.__version__.split("."))) < (1, 24, 10):
                 raise ImportError
         except ImportError:
-            print("🔄 Reinstalling umodx-specific telethon version")
+            print("🔄 Reinstalling UModx-Origins-TL...")
             subprocess.run(
                 [
                     sys.executable,
@@ -140,7 +119,7 @@ else:
                     "-q",
                     "--disable-pip-version-check",
                     "--no-warn-script-location",
-                    "umodx-tl",
+                    "hikka-tl",
                 ],
                 check=True,
             )
@@ -157,7 +136,7 @@ else:
         deps(e)
 
     if __name__ == "__main__":
-        if "umodx_DO_NOT_RESTART" in os.environ:
-            del os.environ["umodx_DO_NOT_RESTART"]
+        if "UMODX_DO_NOT_RESTART" in os.environ:
+            del os.environ["UMODX_DO_NOT_RESTART"]
 
         main.umodx.main()  # Execute main function

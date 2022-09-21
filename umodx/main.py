@@ -1,5 +1,31 @@
 """Main script, where all the fun starts"""
 
+#    Friendly Telegram (telegram userbot)
+#    Copyright (C) 2018-2021 The Authors
+
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+#             █ █ ▀ █▄▀ ▄▀█ █▀█ ▀
+#             █▀█ █ █ █ █▀█ █▀▄ █
+#              © Copyright 2022
+#           https://t.me/hikariatama
+#
+# 🔒      Licensed under the GNU AGPLv3
+# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
+
+
 import argparse
 import asyncio
 import collections
@@ -15,7 +41,7 @@ from math import ceil
 from typing import Union
 
 import telethon
-from telethon import TelegramClient, events
+from telethon import events
 from telethon.errors.rpcerrorlist import (
     ApiIdInvalidError,
     AuthKeyDuplicatedError,
@@ -27,16 +53,11 @@ from telethon.network.connection import (
 )
 from telethon.sessions import SQLiteSession, StringSession, MemorySession
 
-from . import database, loader, utils, heroku
+from . import database, loader, utils, heroku, version
 from .dispatcher import CommandDispatcher
 from .translations import Translator
 from .version import __version__
-from .tl_cache import (
-    install_entity_caching,
-    install_perms_caching,
-    install_fullchannel_caching,
-    install_fulluser_caching,
-)
+from .tl_cache import CustomTelegramClient
 
 try:
     from .web import core
@@ -379,7 +400,7 @@ class umodx:
 
     async def save_client_session(
         self,
-        client: TelegramClient,
+        client: CustomTelegramClient,
         heroku_config: "ConfigVars" = None,  # type: ignore
         heroku_app: "App" = None,  # type: ignore
     ):
@@ -429,8 +450,8 @@ class umodx:
 
     async def _web_banner(self):
         """Shows web banner"""
-        logging.info("✅ umodx ISHGA TUSHIRILDI!")
-        logging.info(f"🔥 WEB MANZIL: {self.web.url}")
+        logging.info("✅ Web mode ready for configuration")
+        logging.info(f"🌐 Please visit {self.web.url}")
 
     async def wait_for_web_auth(self, token: str):
         """Waits for web auth confirmation in Telegram"""
@@ -451,14 +472,14 @@ class umodx:
         if not self.web:
             try:
                 phone = input("Phone: ")
-                client = TelegramClient(
+                client = CustomTelegramClient(
                     MemorySession(),
                     self.api_token.ID,
                     self.api_token.HASH,
                     connection=self.conn,
                     proxy=self.proxy,
                     connection_retries=None,
-                    device_model="Redmi Redmi Note 9 Pro",
+                    device_model="UModx",
                 )
 
                 client.start(phone)
@@ -491,24 +512,19 @@ class umodx:
         """
         for session in self.sessions.copy():
             try:
-                client = TelegramClient(
+                client = CustomTelegramClient(
                     session,
                     self.api_token.ID,
                     self.api_token.HASH,
                     connection=self.conn,
                     proxy=self.proxy,
                     connection_retries=None,
-                    device_model="Redmi Redmi Note 9 Pro",
+                    device_model="UModx",
                 )
 
                 client.start(phone=raise_auth if self.web else lambda: input("Phone: "))
 
                 client.phone = "never gonna give you up"
-
-                install_entity_caching(client)
-                install_perms_caching(client)
-                install_fullchannel_caching(client)
-                install_fulluser_caching(client)
 
                 self.clients += [client]
             except sqlite3.OperationalError:
@@ -562,7 +578,7 @@ class umodx:
             repo = git.Repo()
 
             build = repo.heads[0].commit.hexsha
-            diff = repo.git.log(["HEAD..origin/main", "--oneline"])
+            diff = repo.git.log([f"HEAD..origin/{version.branch}", "--oneline"])
             upd = r"Update required" if diff else r"Up-to-date"
 
             _platform = utils.get_named_platform()
@@ -570,28 +586,29 @@ class umodx:
             logo1 = f"""
 
 
-
               █░█ ▀█ █▄▄ █▀▀ █▄▀ █ █▀ ▀█▀ ▄▀█ █▄░█
               █▄█ █▄ █▄█ ██▄ █░█ █ ▄█ ░█░ █▀█ █░▀█
                         
               █░█ █▀▄▀█ █▀█ █▀▄ ▀▄▀ ░ ░ ░
               █▄█ █░▀░█ █▄█ █▄▀ █░█ ▄ ▄ ▄
-
+              
              ◽ Build: {build[:7]}
              ◽ Versiya: {'.'.join(list(map(str, list(__version__))))}
              ◽ Platforma: {_platform}
-             """
+                     """
 
             if not self.omit_log:
                 print(logo1)
                 web_url = (
-                    f"🌐 Web Manzil: {self.web.url}\n"
+                    f"🌐 Web manzil: {self.web.url}\n"
                     if self.web and hasattr(self.web, "url")
                     else ""
                 )
                 logging.info(
-                    f"🔥 umodx {'.'.join(list(map(str, list(__version__))))} started\n"
+                    f"🌘 UModx {'.'.join(list(map(str, list(__version__))))} started\n"
+                    f"🔏 GitHub commit SHA: {build[:7]} ({upd})\n"
                     f"{web_url}"
+                    f"{_platform}"
                 )
                 self.omit_log = True
 

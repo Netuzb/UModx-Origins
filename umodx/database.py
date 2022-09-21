@@ -21,7 +21,6 @@ except ImportError as e:
 
 from typing import Optional, Union
 
-from telethon import TelegramClient
 from telethon.tl.types import Message
 from telethon.errors.rpcerrorlist import ChannelsTooMuchError
 
@@ -31,6 +30,7 @@ from .pointers import (
     PointerDict,
 )
 from .types import JSONSerializable
+from .tl_cache import CustomTelegramClient
 
 DATA_DIR = (
     os.path.normpath(os.path.join(utils.get_base_dir(), ".."))
@@ -54,7 +54,7 @@ class Database(dict):
     _redis = None
     _saving_task = None
 
-    def __init__(self, client: TelegramClient):
+    def __init__(self, client: CustomTelegramClient):
         super().__init__()
         self._client = client
 
@@ -180,10 +180,10 @@ class Database(dict):
         try:
             self._assets, _ = await utils.asset_channel(
                 self._client,
-                "🔥 umodx-assets",
-                "🔥 UModx resurslari jamlanadigan guruh",
+                "umodx-assets",
+                "🌆 Your UModx assets will be stored here",
                 archive=True,
-                avatar="https://te.legra.ph/file/eca95f4035898ee660212.jpg",
+                avatar="https://raw.githubusercontent.com/hikariatama/assets/master/hikka-assets.png",
             )
         except ChannelsTooMuchError:
             self._assets = None
