@@ -74,16 +74,12 @@ class UpdateNotifierMod(loader.Module):
             raise loader.LoadError("Can't load due to repo init error") from e
 
         self._markup = self.inline.generate_markup(
-                [{
+                [
                   
-                  "text": "🔥 Yangilash", "data": "umodx_update"
-                  
-                 }],
-                 [{
-                   
-                   "text": "🚫 Kerakmas", "data": "umodx_upd_ignore"
-                   
-                 }]
+                 {"text": "🔥 Yangilash", "data": "umodx_update"},
+                 {"text": "🚫 Kerakmas", "data": "umodx_upd_ignore"}
+                 
+            ]
         )
 
         self.poller.start()
