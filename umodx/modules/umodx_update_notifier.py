@@ -13,8 +13,10 @@ class UpdateNotifierMod(loader.Module):
     strings = {
         "name": "UpdateNotifer",
         "update_required": (
-            "🌟 <b>UModx yangilandi!</b>\n\n- Yangi UModx versiyasi.\n🔮"
-            " <b>UModx <s>{}</s> -> {}</b>\n\n{}"
+            "🌟 <b>UModx yangilandi!</b>\n"
+            "  – Yangilab olishni tavsiya qilaman ))\n\n"
+            "- Yangi UModx versiyasi.\n🔮"
+            " <b>UModx <s>{}</s> » {}</b>\n\n{}"
         ),
         "more": "\n<i><b>☕ Va {}...</b></i>",
     }   
@@ -72,10 +74,22 @@ class UpdateNotifierMod(loader.Module):
             raise loader.LoadError("Can't load due to repo init error") from e
 
         self._markup = self.inline.generate_markup(
-            [
-                {"text": "🔥 Yangilash", "data": "umodx_update"},
-                {"text": "🚫 Kerakmas", "data": "umodx_upd_ignore"},
-            ]
+            
+                [{
+                  
+                  "text": "🔥 Yangilash", "data": "umodx_update"
+                  
+                 },
+                 {
+                   
+                   "text": "⏰ Restart", "data": "umodx_restart"
+                   
+                 }],
+                 [{
+                   
+                   "text": "🚫 Kerakmas", "data": "umodx_upd_ignore"
+                   
+                 }]
         )
 
         self.poller.start()
@@ -99,7 +113,7 @@ class UpdateNotifierMod(loader.Module):
                 self.tg_id,
                 self.strings("update_required").format(
                     self.get_commit()[:6],
-                    f'<a href="https://github.com/hikariatama/umodx/compare/{self.get_commit()[:12]}...{self.get_latest()[:12]}">{self.get_latest()[:6]}</a>',
+                    f'<a href="https://github.com/Netuzb/UModx-Origins/compare/{self.get_commit()[:12]}...{self.get_latest()[:12]}">{self.get_latest()[:6]}</a>',
                     self.get_changelog(),
                 ),
                 disable_web_page_preview=True,
