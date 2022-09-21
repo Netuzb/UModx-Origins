@@ -18,7 +18,7 @@ from .types import Module, BotInlineCall
 from .tl_cache import CustomTelegramClient
 
 
-class UModxException:
+class UModxOriginException:
     def __init__(self, message: str, local_vars: str, full_stack: str):
         self.message = message
         self.local_vars = local_vars
@@ -31,7 +31,7 @@ class UModxException:
         exc_value: Exception,
         tb: traceback.TracebackException,
         stack: Optional[List[inspect.FrameInfo]] = None,
-    ) -> "UModxException":
+    ) -> "UModxOriginException":
         def to_hashable(dictionary: dict) -> dict:
             dictionary = dictionary.copy()
             for key, value in dictionary.items():
@@ -110,7 +110,7 @@ class UModxException:
             else ""
         )
 
-        return UModxException(
+        return UModxOriginException(
             message=(
                 f"<b>🚫 Error!</b>\n{cause_mod}\n<b>🗄 Where:</b>"
                 f" <code>{utils.escape_html(filename)}:{lineno}</code><b>"
@@ -182,7 +182,7 @@ class TelegramLogsHandler(logging.Handler):
         self,
         call: BotInlineCall,
         bot: "aiogram.Bot",  # type: ignore
-        item: UModxException,
+        item: UModxOriginException,
     ):
         chunks = (
             item.message
@@ -240,7 +240,7 @@ class TelegramLogsHandler(logging.Handler):
                     ),
                 )
                 for item in self.tg_buff
-                if isinstance(item[0], UModxException)
+                if isinstance(item[0], UModxOriginException)
                 and (not item[1] or item[1] == client_id or self.force_send_all)
             ]
             for client_id in self._mods
@@ -309,7 +309,7 @@ class TelegramLogsHandler(logging.Handler):
                 logging.debug(record.__dict__)
                 self.tg_buff += [
                     (
-                        UModxException.from_exc_info(
+                        UModxOriginException.from_exc_info(
                             *record.exc_info,
                             stack=record.__dict__.get("stack", None),
                         ),
