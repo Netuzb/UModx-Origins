@@ -105,9 +105,9 @@ class LoaderMod(loader.Module):
             "<emoji document_id='6323332130579416910'>✅</emoji><b> All modules"
             " deleted</b>"
         ),
-        "single_cmd": "\n▫️ <code>{}{}</code> {}",
+        "single_cmd": "\n📌 <b>{}{}</b> {}",
         "undoc_cmd": "🦥 No docs",
-        "ihandler": "\n🎹 <code>{}</code> {}",
+        "ihandler": "\n🍁 <b>{}</b> {}",
         "undoc_ihandler": "🦥 No docs",
         "inline_init_failed": (
             "<emoji document_id='5454225457916420314'>😖</emoji> <b>This module requires"
@@ -136,10 +136,10 @@ class LoaderMod(loader.Module):
             "💿 <b>Would you like to save this module to filesystem, so it won't get"
             " unloaded after restart?</b>"
         ),
-        "save": "💿 Save",
-        "no_save": "🚫 Don't save",
-        "save_for_all": "💽 Always save to fs",
-        "never_save": "🚫 Never save to fs",
+        "save": "💿 Saqlash",
+        "no_save": "🚫 Kerakmas",
+        "save_for_all": "💽 Har vaqt saqlash",
+        "never_save": "🚫 Hechqachon saqlamaslik",
         "will_save_fs": (
             "💽 Now all modules, loaded with .loadmod will be saved to filesystem"
         ),
@@ -157,13 +157,17 @@ class LoaderMod(loader.Module):
             "\n\n<emoji document_id='5456129670321806826'>⭐️</emoji><b>This module is"
             " made by {}. Do you want to join this channel to support developer?</b>"
         ),
-        "subscribe": "💬 Subscribe",
-        "no_subscribe": "🚫 Don't subscribe",
-        "subscribed": "💬 Subscribed",
+        "subscribe": "💬 Obuna boʻlish",
+        "no_subscribe": "🚫 Shart emas",
+        "subscribed": "💬 Obuna boʻldingiz",
         "not_subscribed": "🚫 I will no longer suggest subscribing to this channel",
-        "confirm_clearmodules": "⚠️ <b>Are you sure you want to clear all modules?</b>",
-        "clearmodules": "🗑 Clear modules",
-        "cancel": "🚫 Cancel",
+        "confirm_clearmodules":  (
+            "🚨 Siz haqiqatdan ham <b>barcha modullarni<b>"
+            " oʻchirib yuborishni hoxlaysizmi?\n"
+            " – <i>Keyinchalik ularni tiklab boʻlmaydi!</i>"
+            ),
+        "clearmodules": "🗑 Ha, oʻchirish",
+        "cancel": "🚫 Bekor qilish",
         "overwrite_module": (
             "<emoji document_id='5454225457916420314'>😖</emoji> <b>This module"
             " attempted to override the core one (</b><code>{}</code><b>)</b>\n\n<emoji"
