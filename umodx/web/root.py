@@ -1,36 +1,12 @@
 """Main bot page"""
 
-#    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2021 The Authors
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#            ▀█▀ █ █  █▀█  █▀▄▀█ ▄▀█  █▀
-#             █  █▀█ █▄█ █ ▀ █ █▀█ ▄█  
-#             https://t.me/netuzb
-#
-# 🔒 Licensed under the GNU AGPLv3
-# 🌐 https://www.gnu.org/licenses/agpl-3.0.html
-
 import asyncio
 import collections
 import os
 import string
 
-import aiohttp_jinja2
-import telethon
 from aiohttp import web
+import aiohttp_jinja2
 import atexit
 import functools
 import logging
@@ -39,11 +15,14 @@ import re
 import requests
 import time
 
-from .. import utils, main, database, heroku
-
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+import telethon
 from telethon.errors.rpcerrorlist import YouBlockedUserError, FloodWaitError
 from telethon.tl.functions.contacts import UnblockRequest
+
+from .. import utils, main, database, heroku
+from ..tl_cache import CustomTelegramClient
 
 DATA_DIR = (
     os.path.normpath(os.path.join(utils.get_base_dir(), ".."))
@@ -114,7 +93,7 @@ class Web:
 
     async def _check_bot(
         self,
-        client: "TelegramClient",  # type: ignore
+        client: CustomTelegramClient,
         username: str,
     ) -> bool:
         async with client.conversation("@BotFather", exclusive=False) as conv:
@@ -222,7 +201,7 @@ class Web:
         if not phone:
             return web.Response(status=400, body="Invalid phone number")
 
-        client = telethon.TelegramClient(
+        client = CustomTelegramClient(
             telethon.sessions.MemorySession(),
             self.api_token.ID,
             self.api_token.HASH,
